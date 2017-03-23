@@ -1,3 +1,5 @@
 .Rproj.user/
 *.dll
 *.o
+.Rproj.user
+.Rhistory
