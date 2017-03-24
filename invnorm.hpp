@@ -2,13 +2,23 @@
 namespace invnorm {
     template<class Type>
     Type dinvnorm(Type x, Type mu, Type shape, int give_log=0) {
-    Type out = 0.5 * log(shape/(2 * M_PI)) - 1.5 * log(x) -
-               0.5 * shape * pow(x - mu, 2)/(x * pow(mu, 2)); 
-    if (!give_log) 
-        return exp(out);
-    return out;
+        Type out = 0.5 * log(shape/(2 * M_PI)) - 1.5 * log(x) -
+                0.5 * shape * pow(x - mu, 2)/(x * pow(mu, 2)); 
+        if (!give_log) 
+            return exp(out);
+        return out;
     }
     VECTORIZE4_ttti(dinvnorm)
+
+    template<class Type>
+    Type dinvnorm_inv(Type x, Type mu, Type sigma, int give_log=0) {
+        Type out = 0.5 * log(1/(sigma * 2 * M_PI)) - 1.5 * log(x) -
+                   (1/(2 * sigma)) * pow(x - mu, 2)/(x * pow(mu, 2));
+        if (!give_log)
+            return exp(out);
+        return out;
+    }
+    VECTORIZE4_ttti(dinvnorm_inv)
 
     // unlikely to work, need to simulate in R instead
     // template<class Type>

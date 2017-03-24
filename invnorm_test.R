@@ -2,7 +2,7 @@ library(TMB)
 library(ggplot2)
 
 n <- 500
-params <- list(mu = .5, shape = 20)
+params <- list(mu = .5, sigma = 1/20)
 data_list <- list(y = statmod::rinvgauss(500, 0.5, 20))
 
 compile('invnorm_test.cpp')

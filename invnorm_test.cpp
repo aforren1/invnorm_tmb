@@ -6,10 +6,10 @@ Type objective_function<Type>::operator() ()
 {
     DATA_VECTOR(y);
     PARAMETER(mu);
-    PARAMETER(shape);
+    PARAMETER(sigma);
 
     Type nll = 0;
-    nll -= invnorm::dinvnorm(y, mu, shape, true).sum();
+    nll -= invnorm::dinvnorm_inv(y, mu, sigma, true).sum();
     // SIMULATE {
     //     y = invnorm::rinvnorm(y.size(), mu, shape);
     //     REPORT(y);
