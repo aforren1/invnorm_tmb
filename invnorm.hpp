@@ -20,15 +20,14 @@ namespace invnorm {
     }
     VECTORIZE4_ttti(dinvnorm_inv)
 
-    // unlikely to work, need to simulate in R instead
-    // template<class Type>
-    // Type rinvnorm(Type mu, Type shape) {
-    //     Type y = pow(rnorm(0, 1), 2);
-    //     Type z = runif(0, 1);
-    //     Type x = mu + (pow(mu, 2) * y)/(2 * shape) - (mu/(2 * shape)) * sqrt(4*mu*shape*y + pow(mu, 2) * pow(y, 2));
-    //     if (z <= mu/(mu + x))
-    //        return x;
-    //     return pow(mu, 2)/x; 
-    // }
-    // VECTORIZE2_n(rinvnorm)
+    template<class Type>
+    Type rinvnorm(Type mu, Type shape) {
+        Type y = pow(rnorm(Type(0), Type(1)), 2);
+        Type z = runif(Type(0), Type(1));
+        Type x = mu + (pow(mu, 2) * y)/(Type(2) * shape) - (mu/(Type(2) * shape)) * 
+                 sqrt(Type(4)*mu*shape*y + pow(mu, 2) * pow(y, 2));
+        
+        return CppAD::CondExpLe(z, mu/(mu + x), x, pow(mu, 2)/x);
+    }
+    VECTORIZE2_n(rinvnorm)
 }
